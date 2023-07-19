@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="/images/favicon.png" />
+        <link rel="stylesheet" href="./styles.css" />
+        <script src="./script.js" defer></script>
+        <script
+            src="https://kit.fontawesome.com/b23e027ee0.js"
+            crossorigin="anonymous"
+        ></script>
+        <title>Library</title>
+    </head>
+    <body>
+        <header>
+            <a href="">
+                <img
+                    src="./images/high_res-color-transparent.png"
+                    alt="library"
+                    class="logo"
+                />
+            </a>
+        </header>
+        <main>
+            <button class="btn btn-primary add-btn">+ Add book</button>
+
+            <section class="modal hide">
+                <div class="form-container">
+                    <h2>Add new book</h2>
+                    <form class="form">
+                        <input
+                            type="text"
+                            placeholder="Title"
+                            name="title"
+                            id="title"
+                            value=""
+                        />
+                        <input
+                            type="text"
+                            placeholder="Author"
+                            name="author"
+                            id="author"
+                        />
+                        <input
+                            type="number"
+                            placeholder="Pages"
+                            name="pages"
+                            id="pages"
+                        />
+                        <div class="has_read_container">
+                            <label for="has_read">Have you read it?</label>
+                            <input type="checkbox" id="has_read" name="has_read" />
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submit-btn">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </section>
+            <br />
+
+            <section class="books">
+                <!-- <h2 class="no-books">No books found</h2> -->
+            </section>
+        </main>
+    </body>
+</html>

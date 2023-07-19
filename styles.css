@@ -1,0 +1,195 @@
+@import url("https://fonts.googleapis.com/css2?family=Sorts+Mill+Goudy:ital@0;1&display=swap");
+
+:root {
+    --light-brown: #e6b17e;
+    --brown: #c56e33;
+    --dark-brown: #883d1a;
+    --transition: 0.15s linear;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition: var(--transition);
+    font-family: "Sorts Mill Goudy", serif;
+}
+
+main {
+    width: 100%;
+    padding: 0.5em 1.5em;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 100%;
+    background-color: var(--dark-brown);
+    padding: 0.5em 1.5em;
+}
+
+.logo {
+    max-width: 50px;
+}
+
+.btn {
+    display: block;
+    height: 42px;
+    padding: 0.7em;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.btn-primary {
+    background-color: var(--dark-brown);
+    border: 1px solid var(--dark-brown);
+    color: #fefefe;
+}
+
+.btn-primary:hover {
+    background-color: #fefefe;
+    border: 1px solid var(--brown);
+    color: var(--dark-brown);
+}
+
+.btn-secondary {
+    background-color: #fefefe;
+    border: 1px solid var(--brown);
+    color: var(--dark-brown);
+}
+
+.btn-secondary:hover {
+    background-color: #fefefe;
+    border: 1px solid var(--brown);
+    color: var(--dark-brown);
+}
+
+.btn-tertiary {
+    background: transparent;
+    border: none;
+    color: var(--dark-brown);
+    text-decoration: underline;
+}
+
+.add-btn {
+    margin: 0 auto;
+}
+
+.hide {
+    display: none !important;
+}
+
+.modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.53);
+}
+
+.form-container {
+    margin: 0 auto;
+    border-radius: 3px;
+    padding: 1.5em;
+    width: 300px;
+    -webkit-box-shadow: 7px 6px 12px 0px rgba(0, 0, 0, 0.53);
+    -moz-box-shadow: 7px 6px 12px 0px rgba(0, 0, 0, 0.53);
+    box-shadow: 7px 6px 12px 0px rgba(0, 0, 0, 0.53);
+    background-color: #fefefe;
+}
+
+.form-container > h2 {
+    margin-bottom: 1em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 16px;
+}
+
+.form > input {
+    height: 42px;
+    font-size: 14px;
+    padding: 0 0.5em;
+    border: 1px solid var(--dark-brown);
+    border-radius: 3px;
+}
+
+.form > input.error {
+    border: 1px solid red;
+}
+
+.form > input[type="checkbox"] {
+    height: 21px;
+}
+
+.form > .btn {
+    margin: 0 auto;
+    width: 100px;
+}
+
+.modal {
+    z-index: 100;
+}
+
+.books {
+    margin-top: 2em;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 10px;
+}
+
+.card {
+    position: relative;
+    text-align: center;
+    padding: 1em;
+    background: #fefefe;
+    height: 300px;
+    border-radius: 3px;
+    -webkit-box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.11);
+    -moz-box-shadow: 1px 2px 6px 0px rgba(0, 0, 0, 0.11);
+    box-shadow: 3px 2px 6px 0px rgba(0, 0, 0, 0.11);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.ribbon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 10px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.ribbon.blue {
+    background-color: #33658a;
+}
+
+.ribbon.red {
+    background-color: #c12740;
+}
+
+.delete-btn {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 0 auto;
+    margin-top: 3em;
+}
+
+.delete-btn .card > h2 {
+}
