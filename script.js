@@ -1,3 +1,5 @@
+import { checkErrorInputs } from "./checkErrorInputs.js"
+
 const modal = document.querySelector(".modal")
 const addBtn = document.querySelector(".add-btn")
 const submitBtn = document.querySelector("#submit-btn")
@@ -5,12 +7,9 @@ const titleInput = document.querySelector("#title")
 const authorInput = document.querySelector("#author")
 const pagesInput = document.querySelector("#pages")
 const hasReadInput = document.querySelector("#has_read")
-let errorVals = []
+const booksEl = document.querySelector(".books")
 
-let title = titleInput.value
-let author = authorInput.value
-let pages = pagesInput.value
-let hasRead = hasReadInput.checked
+let errorVals = []
 
 class Library {
     constructor() {
@@ -19,11 +18,23 @@ class Library {
 
     addBook(newBook) {
         if (!this.bookExists(newBook)) {
+            newBook.id = Date.now() * Math.floor(Math.random() * 100)
             this.books.push(newBook)
             generateCard(newBook)
         } else {
             alert("This book already exists!")
         }
+    }
+
+    readBook(id) {
+        const book = this.books.find((el) => el.id === id)
+        if (book) {
+            book.hasRead = !book.hasRead
+        }
+    }
+
+    deleteBook(id) {
+        this.books = this.books.filter((book) => book.id !== id)
     }
 
     bookExists(newBook) {
@@ -42,9 +53,15 @@ class Book {
     }
 }
 
+const updateCards = () => {
+    booksEl.innerHTML = ""
+    for (let i = 0; i < library.books.length; i++) {
+        generateCard(library.books[i])
+    }
+}
+
 const generateCard = (newBook) => {
-    const { title, author, pages, hasRead } = newBook
-    const booksEl = document.querySelector(".books")
+    const { title, author, pages, hasRead, id } = newBook
 
     const cardEl = document.createElement("div")
     cardEl.classList.add("card")
@@ -53,23 +70,44 @@ const generateCard = (newBook) => {
     const authorEl = document.createElement("p")
     authorEl.innerText = `By ${author}`
     const pagesEl = document.createElement("p")
-    pagesEl.innerText = pages
-    const hasReadEl = document.createElement("p")
-    const deleteBtn = document.createElement("button")
-    deleteBtn.innerHTML = `<i class="fas fa-solid fa-trash"></i><span>Remove</span>`
-    const ribbonEl = document.createElement("div")
+    pagesEl.innerText = `${pages} pages`
 
+    const actionBtns = document.createElement("div")
+    const readBtn = document.createElement("button")
+    const deleteBtn = document.createElement("button")
+    readBtn.innerHTML = `<i class="fas fa-solid fa-book"></i><span>${
+        hasReadInput.checked ? "Not read" : "Read"
+    }</span>`
+    deleteBtn.innerHTML = `<i class="fas fa-solid fa-trash"></i><span>Remove</span>`
+
+    deleteBtn.classList.add("btn", "btn-secondary", "delete-btn")
+    readBtn.classList.add("btn", "btn-primary", "read-btn")
+
+    actionBtns.appendChild(readBtn)
+    actionBtns.appendChild(deleteBtn)
+    actionBtns.classList.add("action-btns")
+
+    // Ribbon
+    const ribbonEl = document.createElement("div")
     ribbonEl.classList.add("ribbon")
-    deleteBtn.classList.add("btn", "btn-primary", "delete-btn")
     hasRead ? ribbonEl.classList.add("blue") : ribbonEl.classList.add("red")
 
     cardEl.appendChild(titleEl)
     cardEl.appendChild(authorEl)
     cardEl.appendChild(pagesEl)
-    cardEl.appendChild(hasReadEl)
     cardEl.appendChild(ribbonEl)
-    cardEl.appendChild(deleteBtn)
+    cardEl.appendChild(actionBtns)
     booksEl.appendChild(cardEl)
+
+    readBtn.addEventListener("click", (e) => {
+        library.readBook(id)
+        updateCards()
+    })
+
+    deleteBtn.addEventListener("click", (e) => {
+        library.deleteBook(id)
+        updateCards()
+    })
 }
 
 modal.addEventListener("mouseover", (e) => {
@@ -82,7 +120,6 @@ modal.addEventListener("mouseover", (e) => {
 
 // INPUTS
 titleInput.addEventListener("input", (e) => {
-    title = e.target.value
     if (title) {
         errorVals.map((val) => {
             if (val.name === "title") {
@@ -93,7 +130,6 @@ titleInput.addEventListener("input", (e) => {
 })
 
 authorInput.addEventListener("input", (e) => {
-    author = e.target.value
     if (author) {
         errorVals.map((val) => {
             if (val.name === "author") {
@@ -104,7 +140,6 @@ authorInput.addEventListener("input", (e) => {
 })
 
 pagesInput.addEventListener("input", (e) => {
-    pages = e.target.value
     if (pages) {
         errorVals.map((val) => {
             if (val.name === "pages") {
@@ -112,10 +147,6 @@ pagesInput.addEventListener("input", (e) => {
             }
         })
     }
-})
-
-hasReadInput.addEventListener("change", (e) => {
-    hasRead = e.target.checked
 })
 
 addBtn.addEventListener("click", (e) => {
@@ -131,22 +162,15 @@ modal.addEventListener("click", (e) => {
 
 submitBtn.addEventListener("click", (e) => {
     e.preventDefault()
-    errorVals = []
-    const values = {
-        titleInput,
-        authorInput,
-        pagesInput,
-    }
 
-    Object.keys(values).map((val) => {
-        if (!values[val].value) {
-            errorVals.push(values[val])
-        }
-    })
-
+    errorVals = checkErrorInputs({ titleInput, authorInput, pagesInput })
     errorVals.map((errorVal) => errorVal.classList.add("error"))
 
     if (errorVals.length === 0) {
+        const title = titleInput.value
+        const author = authorInput.value
+        const pages = pagesInput.value
+        const hasRead = hasReadInput.checked
         const newBook = { title, author, pages, hasRead }
         console.log(newBook)
         library.addBook(newBook)
