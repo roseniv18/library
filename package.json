@@ -1,0 +1,18 @@
+{
+	"name": "library",
+	"version": "1.0.0",
+	"description": "Built with Typescript. For this project I am using local storage only and no database.",
+	"main": "index.js",
+	"dependencies": {
+		"typescript": "^5.2.2"
+	},
+	"devDependencies": {
+		"typescript": "^5.2.2"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}
